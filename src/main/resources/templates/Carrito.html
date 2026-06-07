@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <link rel="stylesheet" href="/CSSlogin.css">
+    <link rel="stylesheet" th:href="@{/CSS/cliente-mobile.css}">
+    <link rel="manifest" href="/manifest.json">
+    
+    <meta name="theme-color" content="#1f3d2b">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Carrito</title>
+
+    <style>
+        :root {
+            --verde-principal: #2F5D3A;
+            --verde-hover: #24482D;
+            --fondo: #D8D3CB;
+            --card: #E7E5E2;
+            --blanco: #FFFFFF;
+            --gris-texto: #6B6B6B;
+            --texto-principal: #1A1A1A;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI';
+            background: var(--fondo);
+            color: var(--texto-principal);
+        }
+
+        .navbar {
+            background: var(--verde-principal);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--blanco);
+        }
+
+        .navbar a {
+            color: var(--blanco);
+            margin-left: 15px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .container {
+            padding: 40px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .item {
+            background: var(--card);
+            padding: 18px;
+            margin: 12px 0;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+        }
+
+        .item h3 {
+            margin: 0 0 8px 0;
+            color: var(--verde-principal);
+        }
+
+        .detalle p {
+            margin: 4px 0;
+            color: var(--gris-texto);
+        }
+
+        .subtotal {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--verde-principal);
+        }
+
+        .total {
+            margin-top: 25px;
+            font-size: 22px;
+            font-weight: bold;
+            text-align: right;
+            color: var(--verde-principal);
+        }
+
+        .acciones {
+            margin-top: 25px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: var(--verde-principal);
+            color: var(--blanco);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background: var(--verde-hover);
+        }
+
+        .empty {
+            text-align: center;
+            color: var(--gris-texto);
+            margin-top: 30px;
+        }
+
+        .mensaje-exito {
+            background: #1f7a3a;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .mensaje-error {
+            background: #b22222;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Casa Mia</h2>
+
+    <div>
+        <a href="/home">Inicio</a>
+        <a href="/menu">Menú</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <h1>Tu Carrito</h1>
+
+    <div th:if="${param.orden}" class="mensaje-exito">
+        ✅ ¡Orden enviada correctamente!
+    </div>
+
+    <div th:if="${param.sinStock}" class="mensaje-error">
+        ⚠ No se pudo realizar la orden porque uno o más productos no tienen stock suficiente.
+    </div>
+
+    <div th:if="${#lists.isEmpty(carrito)}" class="empty">
+        <p>No hay productos en el carrito 🛒</p>
+    </div>
+
+    <div th:each="item : ${carrito}" class="item">
+
+        <div class="detalle">
+            <h3 th:text="${item.nombre}"></h3>
+
+            <p>
+                Precio unitario:
+                $<span th:text="${#numbers.formatDecimal(item.precio,1,2)}"></span>
+            </p>
+
+            <p>
+                Cantidad:
+                <span th:text="${item.cantidad}"></span>
+            </p>
+        </div>
+
+        <div class="subtotal">
+            $<span th:text="${#numbers.formatDecimal(item.subtotal,1,2)}"></span>
+        </div>
+
+    </div>
+
+    <div class="total" th:if="${!#lists.isEmpty(carrito)}">
+        Total:
+        $<span th:text="${#numbers.formatDecimal(total,1,2)}"></span>
+    </div>
+
+    <div class="acciones" th:if="${!#lists.isEmpty(carrito)}">
+
+        <a href="/menu" class="btn">
+            Seguir comprando
+        </a>
+
+        <a href="/pedido" class="btn">
+            Realizar Pedido
+        </a>
+
+        <a href="/orden/realizar" class="btn">
+            Realizar orden en restaurante
+        </a>
+
+    </div>
+
+</div>
+<script src="/pwa.js"></script>
+</body>
+</html>

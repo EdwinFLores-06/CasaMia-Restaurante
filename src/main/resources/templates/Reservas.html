@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/CSSlogin.css">
+    <link rel="stylesheet" th:href="@{/CSS/cliente-mobile.css}">
+    <link rel="manifest" href="/manifest.json">
+    
+    <meta name="theme-color" content="#1f3d2b">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Reservas - Casa Mia</title>
+
+    <style>
+        :root {
+            --verde-principal: #2F5D3A;
+            --verde-hover: #24482D;
+            --fondo: #D8D3CB;
+            --card: #E7E5E2;
+            --blanco: #FFFFFF;
+            --gris-borde: #CFCFCF;
+            --gris-texto: #6B6B6B;
+            --texto-principal: #1A1A1A;
+            --dorado: #c8a96a;
+            --rojo: #c0392b;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI';
+            background: var(--fondo);
+            color: var(--texto-principal);
+        }
+
+        .navbar {
+            background: var(--verde-principal);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--blanco);
+        }
+
+        .navbar a {
+            color: var(--blanco);
+            margin-left: 15px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .navbar a:hover {
+            color: var(--dorado);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            padding: 45px 20px;
+        }
+
+        .form {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 18px;
+            width: 780px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--verde-principal);
+            margin-bottom: 10px;
+        }
+
+        .subtitulo {
+            text-align: center;
+            color: var(--gris-texto);
+            margin-bottom: 25px;
+        }
+
+        .datos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .campo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--verde-principal);
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px;
+            border-radius: 8px;
+            border: 1px solid var(--gris-borde);
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--verde-principal);
+        }
+
+        .mensaje {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .ok {
+            background: #d8f3dc;
+            color: #1f7a3a;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+        .mapa {
+            margin: 30px 0 20px;
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.05);
+        }
+
+        .pantalla {
+            width: 85%;
+            margin: 0 auto 28px auto;
+            padding: 14px;
+            border-top: 6px solid var(--dorado);
+            border-radius: 50%;
+            color: var(--verde-principal);
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+        .mesas {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .mesa input {
+            display: none;
+        }
+
+        .mesa label {
+            display: block;
+            padding: 12px 6px;
+            border-radius: 12px;
+            background: #dfe6df;
+            border: 2px solid #bfc8bf;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .mesa label:hover {
+            background: #d8caa8;
+            transform: translateY(-3px);
+        }
+
+        .mesa input:checked + label {
+            background: var(--verde-principal);
+            color: white;
+            border-color: var(--verde-hover);
+            transform: scale(1.08);
+        }
+
+        .mesa label.ocupada {
+            background: var(--rojo);
+            color: white;
+            border-color: #8b1a1a;
+            cursor: not-allowed;
+            opacity: 0.9;
+        }
+
+        .mesa label.ocupada:hover {
+            transform: none;
+            background: var(--rojo);
+        }
+
+        .leyenda {
+            margin-top: 22px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .leyenda span {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin: 0 6px 0 15px;
+            border-radius: 4px;
+            vertical-align: middle;
+        }
+
+        .disponible-box {
+            background: #dfe6df;
+            border: 1px solid #bfc8bf;
+        }
+
+        .ocupada-box {
+            background: var(--rojo);
+        }
+
+        .seleccionada-box {
+            background: var(--verde-principal);
+        }
+
+        .btn-reservar {
+            background: var(--verde-principal);
+            color: var(--blanco);
+            border: none;
+            padding: 13px;
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .btn-reservar:hover {
+            background: var(--verde-hover);
+        }
+
+        .nota {
+            margin-top: 10px;
+            color: var(--gris-texto);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        @media (max-width: 750px) {
+            .form {
+                width: 100%;
+            }
+
+            .datos {
+                grid-template-columns: 1fr;
+            }
+
+            .mesas {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Casa Mia</h2>
+
+    <div>
+        <a href="/home">Inicio</a>
+        <a href="/menu">Menú</a>
+        <a href="/logout">Salir</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <form action="/reservar" method="post" class="form">
+
+        <h2>Reservar Mesa</h2>
+
+        <p class="subtitulo">
+            Elige fecha, hora y selecciona la mesa que sea de tu agrado.
+        </p>
+
+        <div th:if="${param.ok}" class="mensaje ok">
+            ✅ Reserva enviada correctamente.
+        </div>
+
+        <div th:if="${param.ocupada}" class="mensaje error">
+            ⚠ Esa mesa ya está reservada para esa fecha y hora.
+        </div>
+
+        <div class="datos">
+
+            <div class="campo">
+                <label>Nombre completo</label>
+                <input type="text" name="nombre" placeholder="Ej: Ricardo Pineda" required>
+            </div>
+
+            <div class="campo">
+                <label>Cantidad de personas</label>
+                <input type="number" name="personas" placeholder="Ej: 4" min="1" required>
+            </div>
+
+            <div class="campo">
+                <label>Fecha</label>
+                <input type="date" name="fecha" required>
+            </div>
+
+            <div class="campo">
+                <label>Hora</label>
+                <input type="time" name="hora" required>
+            </div>
+
+        </div>
+
+        <div class="mapa">
+
+            <div class="pantalla">
+                🍽 Área principal del restaurante
+            </div>
+
+            <p>
+                Selecciona una mesa disponible
+            </p>
+
+            <div class="mesas">
+
+                <div class="mesa" th:each="i : ${#numbers.sequence(1, 32)}">
+
+                    <input
+                            type="radio"
+                            th:id="'mesa' + ${i}"
+                            name="mesa"
+                            th:value="${i}"
+                            required>
+
+                    <label
+                            th:for="'mesa' + ${i}"
+                            th:id="'labelMesa' + ${i}">
+
+                        🍽
+                        <br>
+                        Mesa
+                        <span th:text="${i}"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="leyenda">
+                <span class="disponible-box"></span> Disponible
+                <span class="ocupada-box"></span> Reservada
+                <span class="seleccionada-box"></span> Seleccionada
+            </div>
+
+            <p class="nota">
+                Las mesas en rojo ya están reservadas para la fecha y hora seleccionadas.
+            </p>
+
+        </div>
+
+        <button type="submit" class="btn-reservar">
+            Reservar
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+    const fechaInput = document.querySelector('input[name="fecha"]');
+    const horaInput = document.querySelector('input[name="hora"]');
+
+    function limpiarMesas() {
+        for (let i = 1; i <= 32; i++) {
+            const input = document.getElementById("mesa" + i);
+            const label = document.getElementById("labelMesa" + i);
+
+            if (input && label) {
+                input.disabled = false;
+                label.classList.remove("ocupada");
+            }
+        }
+    }
+
+    function actualizarMesas() {
+        const fecha = fechaInput.value;
+        const hora = horaInput.value;
+
+        limpiarMesas();
+
+        if (!fecha || !hora) {
+            return;
+        }
+
+        fetch(`/reservas/ocupadas?fecha=${fecha}&hora=${hora}`)
+            .then(response => response.json())
+            .then(mesasOcupadas => {
+
+                mesasOcupadas.forEach(numeroMesa => {
+                    const input = document.getElementById("mesa" + numeroMesa);
+                    const label = document.getElementById("labelMesa" + numeroMesa);
+
+                    if (input && label) {
+                        input.disabled = true;
+                        input.checked = false;
+                        label.classList.add("ocupada");
+                    }
+                });
+            });
+    }
+
+    fechaInput.addEventListener("change", actualizarMesas);
+    horaInput.addEventListener("change", actualizarMesas);
+</script>
+<script src="/pwa.js"></script>
+</body>
+</html>

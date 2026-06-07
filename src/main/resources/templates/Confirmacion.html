@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Factura - Casa Mia</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f5f1e8;
+            color: #1A1A1A;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 3px solid #1f3d2b;
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .brand h1 {
+            color: #1f3d2b;
+            margin: 0;
+        }
+
+        .brand p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .factura-info {
+            text-align: right;
+        }
+
+        .factura-info h2 {
+            color: #c8a96a;
+            margin: 0;
+        }
+
+        .section {
+            margin-top: 25px;
+        }
+
+        .section h3 {
+            color: #1f3d2b;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+        }
+
+        .datos {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .dato {
+            background: #f5f1e8;
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .dato strong {
+            color: #1f3d2b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background: #1f3d2b;
+            color: white;
+            padding: 14px;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1f3d2b;
+            margin-top: 20px;
+        }
+
+        .acciones {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .btn {
+            background: #1f3d2b;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 10px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-sec {
+            background: #c8a96a;
+        }
+
+        @media print {
+            .acciones {
+                display: none;
+            }
+
+            body {
+                background: white;
+            }
+
+            .container {
+                box-shadow: none;
+                margin: 0;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div class="brand">
+            <h1>🍽 Casa Mia</h1>
+            <p>Restaurante Casa Mia</p>
+            <p>Gracias por tu compra</p>
+        </div>
+
+        <div class="factura-info">
+            <h2>FACTURA</h2>
+            <p>
+                Fecha:
+                <span th:text="${fechaFactura}"></span>
+            </p>
+            <p>Estado: Pagado / Confirmado</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>Datos de entrega</h3>
+
+        <div class="datos">
+            <div class="dato">
+                <strong>Dirección:</strong>
+                <span th:text="${direccion}"></span>
+            </div>
+
+            <div class="dato">
+                <strong>Teléfono:</strong>
+                <span th:text="${telefono}"></span>
+            </div>
+
+            <div class="dato">
+                <strong>Forma de pago:</strong>
+                <span th:text="${pago}"></span>
+            </div>
+
+            <div class="dato">
+                <strong>Comentario:</strong>
+                <span th:text="${comentario}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section" th:if="${pago == 'Tarjeta'}">
+        <h3>Datos de tarjeta</h3>
+
+        <div class="datos">
+            <div class="dato">
+                <strong>Nombre en tarjeta:</strong>
+                <span th:text="${nombreTarjeta}"></span>
+            </div>
+
+            <div class="dato">
+                <strong>Tarjeta:</strong>
+                <span th:text="${tarjetaMostrada}"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>Detalle del pedido</h3>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Platillo</th>
+                <th>Cantidad</th>
+                <th>Precio unitario</th>
+                <th>Subtotal</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="item : ${carrito}">
+                <td th:text="${item.nombre}"></td>
+                <td th:text="${item.cantidad}"></td>
+                <td>
+                    $<span th:text="${#numbers.formatDecimal(item.precio,1,2)}"></span>
+                </td>
+                <td>
+                    $<span th:text="${#numbers.formatDecimal(item.subtotal,1,2)}"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="total">
+            Total:
+            $<span th:text="${#numbers.formatDecimal(total,1,2)}"></span>
+        </div>
+    </div>
+
+    <div class="acciones">
+        <button class="btn btn-sec" onclick="window.print()">
+            🖨 Imprimir factura
+        </button>
+
+        <a href="/home" class="btn">
+            Volver al inicio
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

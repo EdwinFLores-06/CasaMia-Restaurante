@@ -1,0 +1,521 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 22 may 2026, 9:13:46 p. m.
+    Author     : flore
+*/
+@media (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
+    }
+
+    .layout {
+        display: flex;
+        width: 100%;
+    }
+
+    .sidebar {
+        width: 120px !important;
+        min-width: 120px !important;
+        height: 100vh;
+        padding: 10px !important;
+    }
+
+    .logo h2 {
+        font-size: 13px;
+    }
+
+    .logo p {
+        display: none;
+    }
+
+    .logo-icon {
+        font-size: 16px;
+    }
+
+    .menu a {
+        font-size: 10px !important;
+        padding: 7px !important;
+        margin-bottom: 6px !important;
+    }
+
+    .mini-card {
+        display: none;
+    }
+
+    .main {
+        margin-left: 0 !important;
+        padding: 10px !important;
+        width: calc(100% - 120px);
+    }
+
+    .hero {
+        padding: 10px !important;
+        border-radius: 14px !important;
+    }
+
+    .hero-top {
+        display: block !important;
+    }
+
+    .hero-top h1 {
+        font-size: 18px !important;
+    }
+
+    .hero-top p {
+        font-size: 12px !important;
+    }
+
+    .time-box {
+        margin-top: 8px;
+        font-size: 10px !important;
+        padding: 6px !important;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+
+    .card {
+        padding: 10px !important;
+        border-radius: 12px !important;
+    }
+
+    .card h3 {
+        font-size: 12px !important;
+    }
+
+    .card p {
+        font-size: 10px !important;
+    }
+
+    .icon-circle {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 14px !important;
+    }
+
+    .promo-grid {
+        display: block !important;
+    }
+
+    .promo-box {
+        padding: 14px !important;
+        border-radius: 14px !important;
+        margin-bottom: 10px !important;
+        min-height: auto !important;
+    }
+
+    .promo-box h2 {
+        font-size: 18px !important;
+    }
+
+    .promo-box p,
+    .promo-box span {
+        font-size: 10px !important;
+    }
+
+    .promo-box img {
+        position: static !important;
+        width: 100% !important;
+        height: 110px !important;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-top: 8px;
+    }
+
+    .discount {
+        position: static !important;
+        display: inline-block;
+        font-size: 10px !important;
+        padding: 8px !important;
+        margin-top: 8px;
+    }
+
+    .promo-btn {
+        font-size: 10px !important;
+        padding: 7px 10px !important;
+    }
+
+    .bottom-info {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+    }
+
+    .info-card {
+        padding: 10px !important;
+        border-radius: 12px !important;
+    }
+
+    .info-card strong {
+        font-size: 11px !important;
+    }
+
+    .info-card p {
+        font-size: 10px !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .container {
+        padding: 16px !important;
+    }
+
+    .titulo h1 {
+        font-size: 24px !important;
+    }
+
+    .titulo p {
+        font-size: 13px !important;
+    }
+
+    .categorias {
+        justify-content: flex-start !important;
+        overflow-x: auto;
+        flex-wrap: nowrap !important;
+        gap: 10px !important;
+        padding-bottom: 10px;
+    }
+
+    .categorias a {
+        white-space: nowrap;
+        font-size: 12px !important;
+        padding: 9px 14px !important;
+    }
+
+    .seccion-menu {
+        margin-bottom: 35px !important;
+    }
+
+    .seccion-menu h2 {
+        font-size: 20px !important;
+    }
+
+    .grid {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+    }
+
+    .card {
+        border-radius: 18px !important;
+    }
+
+    .card img {
+        height: 170px !important;
+    }
+
+    .card-content {
+        padding: 16px !important;
+    }
+
+    .card-content h3 {
+        font-size: 18px !important;
+    }
+
+    .descripcion {
+        font-size: 13px !important;
+    }
+
+    .precio {
+        font-size: 18px !important;
+    }
+
+    .stock {
+        font-size: 13px !important;
+    }
+
+    .cantidad-input {
+        font-size: 14px !important;
+        padding: 10px !important;
+    }
+
+    .btn {
+        padding: 12px !important;
+        font-size: 14px !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .item {
+        display: block !important;
+        padding: 16px !important;
+    }
+
+    .detalle h3 {
+        font-size: 17px !important;
+        margin-bottom: 10px !important;
+    }
+
+    .detalle p {
+        font-size: 13px !important;
+    }
+
+    .subtotal {
+        margin-top: 12px !important;
+        text-align: right !important;
+        font-size: 18px !important;
+    }
+
+    .total {
+        font-size: 20px !important;
+        text-align: center !important;
+    }
+
+    .acciones {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    .acciones .btn {
+        width: 100% !important;
+        text-align: center !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .container {
+        flex-direction: column !important;
+        padding: 16px !important;
+        gap: 18px !important;
+    }
+
+    .form,
+    .resumen {
+        width: 100% !important;
+        padding: 18px !important;
+        border-radius: 18px !important;
+    }
+
+    .form h2,
+    .resumen h2 {
+        font-size: 22px !important;
+        text-align: center;
+    }
+
+    label {
+        font-size: 13px !important;
+    }
+
+    input,
+    textarea,
+    select {
+        font-size: 14px !important;
+        padding: 12px !important;
+    }
+
+    textarea {
+        min-height: 90px;
+    }
+
+    .item {
+        display: flex !important;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 13px !important;
+    }
+
+    .item span {
+        font-size: 13px !important;
+    }
+
+    .total {
+        font-size: 22px !important;
+        text-align: center !important;
+        margin-top: 18px !important;
+    }
+
+    button {
+        width: 100% !important;
+        padding: 14px !important;
+        font-size: 15px !important;
+        border-radius: 14px !important;
+    }
+
+    .tarjeta-box {
+        padding: 16px !important;
+        border-radius: 16px !important;
+    }
+
+    .tarjeta-box h3 {
+        font-size: 18px !important;
+    }
+
+    .fila-tarjeta {
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+
+    .navbar {
+        flex-direction: column !important;
+        gap: 10px;
+        text-align: center;
+        padding: 15px !important;
+    }
+
+    .navbar div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .navbar a {
+        margin: 0 !important;
+        font-size: 13px !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* RESERVAS */
+
+    .form {
+        width: 100% !important;
+    }
+
+    .datos {
+        grid-template-columns: 1fr !important;
+    }
+
+    .mapa {
+        padding: 16px !important;
+    }
+
+    .pantalla {
+        width: 100% !important;
+        font-size: 14px !important;
+    }
+
+    .mesas {
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    .mesa label {
+        padding: 10px 4px !important;
+        font-size: 12px !important;
+        border-radius: 10px !important;
+    }
+
+    .leyenda {
+        font-size: 12px !important;
+        line-height: 1.8;
+    }
+
+
+    /* MIS PEDIDOS */
+
+    .pedido {
+        padding: 16px !important;
+        border-radius: 16px !important;
+    }
+
+    .pedido h2 {
+        font-size: 18px !important;
+    }
+
+    .pedido p,
+    .pedido li {
+        font-size: 13px !important;
+    }
+
+    .estado {
+        font-size: 12px !important;
+        padding: 7px 12px !important;
+    }
+
+
+    /* PROMOCIONES CLIENTE */
+
+    .promos-grid {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+    }
+
+    .promo-card {
+        flex-direction: column !important;
+        border-radius: 18px !important;
+    }
+
+    .promo-card img.img-principal {
+        width: 100% !important;
+        height: 180px !important;
+    }
+
+    .promo-content {
+        padding: 18px !important;
+    }
+
+    .promo-content h3 {
+        font-size: 20px !important;
+    }
+
+    .precio-promo {
+        font-size: 22px !important;
+    }
+
+    .combo-img-grid {
+        justify-content: center !important;
+    }
+
+    .combo-img {
+        width: 75px !important;
+        height: 65px !important;
+    }
+
+    .btn-promo {
+        width: 100% !important;
+        padding: 13px !important;
+        border-radius: 14px !important;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* LOGIN */
+
+    .login-box {
+        width: 90% !important;
+        max-width: 360px !important;
+        padding: 25px !important;
+        margin: 0 auto !important;
+    }
+
+    .container {
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 20px !important;
+        min-height: 100vh !important;
+    }
+
+    .info {
+        display: none !important;
+    }
+
+    .logo img {
+        width: 85px !important;
+        height: 85px !important;
+    }
+
+    .login-box h2 {
+        font-size: 30px !important;
+    }
+
+    .login-box input {
+        font-size: 14px !important;
+        padding: 12px !important;
+    }
+
+    .login-box button {
+        padding: 13px !important;
+        font-size: 14px !important;
+    }
+}

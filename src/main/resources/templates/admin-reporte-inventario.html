@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte Inventario - Admin</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f5f1e8;
+        }
+
+        .navbar {
+            background: #1f3d2b;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            padding: 35px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: #555;
+        }
+
+        .card p {
+            font-size: 32px;
+            color: #1f3d2b;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #1f3d2b;
+            color: white;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .bajo {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .ok {
+            color: #27ae60;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div>📊 Reporte de Inventario - Casa Mia</div>
+    <a href="/admin">⬅ Volver al panel</a>
+</div>
+
+<div class="container">
+
+    <div class="cards">
+        <div class="card">
+            <h3>🍽 Platillos registrados</h3>
+            <p th:text="${totalProductos}"></p>
+        </div>
+
+        <div class="card">
+            <h3>📦 Unidades totales</h3>
+            <p th:text="${unidadesTotales}"></p>
+        </div>
+
+        <div class="card">
+            <h3>⚠ Stock bajo</h3>
+            <p th:text="${stockBajo}"></p>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Platillo</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="p : ${productos}">
+            <td th:text="${p.nombre}"></td>
+            <td th:text="${p.cantidad}"></td>
+            <td>$<span th:text="${#numbers.formatDecimal(p.precio,1,2)}"></span></td>
+
+            <td>
+                <span th:if="${p.cantidad <= 5}" class="bajo">Stock bajo</span>
+                <span th:if="${p.cantidad > 5}" class="ok">Disponible</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

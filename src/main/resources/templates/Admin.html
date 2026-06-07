@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Admin | Casa Mia</title>
+
+    <link rel="stylesheet" href="/css/admin.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div>
+
+            <div class="logo">
+                <h1>🍽 Casa Mia</h1>
+                <p>PANEL ADMINISTRATIVO</p>
+            </div>
+
+            <nav class="menu">
+
+                <a href="/admin" class="active">
+                    <span>🏠</span>
+                    Dashboard
+                </a>
+
+                <a href="/admin/promociones">
+                    <span>🔥</span>
+                    Crear Promociones
+                </a>
+
+                <a href="/admin/combos">
+                    <span>🎁</span>
+                    Combos promocionales
+                </a>
+
+                <a href="/admin/ventas">
+                    <span>💰</span>
+                    Ventas
+                </a>
+
+                <a href="/admin/reporte-inventario">
+                    <span>📊</span>
+                    Reporte inventario
+                </a>
+
+                <a href="/admin/usuarios">
+                    <span>👥</span>
+                    Empleados
+                </a>
+
+                <a href="/logout">
+                    <span>🚪</span>
+                    Cerrar Sesión
+                </a>
+
+            </nav>
+
+        </div>
+
+        <!-- USER BOX -->
+        <div class="restaurant-box">
+
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4" alt="restaurant">
+
+            <div>
+                <h3>Casa Mia</h3>
+                <p>Restaurante</p>
+            </div>
+
+            <span>⌄</span>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- TOP -->
+        <div class="top-bar">
+
+            <div>
+                <h1>Bienvenido Administrador </h1>
+                <p>Gestiona y controla tu restaurante desde aquí</p>
+            </div>
+
+            <div class="notification">
+                🔔
+            </div>
+
+        </div>
+
+        <!-- CARDS -->
+        <section class="cards">
+
+            <div class="card green">
+                <div class="icon">💰</div>
+
+                <h2>Ventas</h2>
+
+                <p>
+                    Consulta ganancias, pedidos
+                    y estadísticas de ventas
+                </p>
+
+                <button onclick="location.href='/admin/ventas'">
+                    →
+                </button>
+            </div>
+
+            <div class="card purple">
+
+                <div class="icon">📊</div>
+
+                <h2>Reporte Inventario</h2>
+
+                <p>
+                    Consulta el stock actual
+                    y movimientos de inventario
+                </p>
+
+                <button onclick="location.href='/admin/reporte-inventario'">
+                    →
+                </button>
+
+            </div>
+
+            <div class="card orange">
+
+                <div class="icon">👥</div>
+
+                <h2>Usuarios</h2>
+
+                <p>
+                    Administra usuarios, roles
+                    y permisos del sistema
+                </p>
+
+                <button onclick="location.href='/admin/usuarios'">
+                    →
+                </button>
+
+            </div>
+
+            <div class="card red">
+
+                <div class="icon">🔥</div>
+
+                <h2>Promociones</h2>
+
+                <p>
+                    Crea y administra nuevas
+                    promociones para tu restaurante
+                </p>
+
+                <button onclick="location.href='/admin/promociones'">
+                    →
+                </button>
+
+            </div>
+
+            <div class="card yellow">
+
+                <div class="icon">🎁</div>
+
+                <h2>Combos promocionales</h2>
+
+                <p>
+                    Crea y administra nuevos
+                    combos promocionales
+                </p>
+
+                <button onclick="location.href='/admin/combos'">
+                    →
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

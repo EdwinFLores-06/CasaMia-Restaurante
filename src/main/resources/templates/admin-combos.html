@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Combos Promocionales - Admin</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f5f1e8;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #1f3d2b;
+            padding: 25px;
+            position: fixed;
+        }
+
+        .sidebar h2 {
+            color: white;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .sidebar a:hover {
+            background: #2e5d3b;
+        }
+
+        .content {
+            margin-left: 250px;
+            width: 100%;
+            padding: 30px;
+        }
+
+        .title {
+            font-size: 32px;
+            color: #1f3d2b;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .form-box, .table-box {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            color: #1f3d2b;
+            margin-bottom: 20px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        textarea {
+            height: 80px;
+            resize: none;
+        }
+
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .producto-check {
+            background: #f5f1e8;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .producto-check input {
+            width: auto;
+            margin-right: 7px;
+        }
+
+        .check-activo {
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #1f3d2b;
+        }
+
+        .check-activo input {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .btn {
+            background: #1f3d2b;
+            color: white;
+            border: none;
+            padding: 11px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .btn-danger {
+            background: #b22222;
+        }
+
+        .btn-warning {
+            background: #c8a96a;
+        }
+
+        .btn-success {
+            background: #27ae60;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #1f3d2b;
+            color: white;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .estado {
+            padding: 7px 13px;
+            color: white;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .activo {
+            background: #27ae60;
+        }
+
+        .inactivo {
+            background: #b22222;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>🍽 Casa Mia</h2>
+
+    <a href="/admin">🏠 Dashboard</a>
+    <a href="/admin/ventas">💰 Ventas</a>
+    <a href="/admin/promociones">🔥 Promociones individuales</a>
+    <a href="/admin/combos">🎁 Combos promocionales</a>
+    <a href="/admin/reporte-inventario">📊 Reporte inventario</a>
+    <a href="/admin/usuarios">👥 Empleados</a>
+    <a href="/logout">🚪 Cerrar sesión</a>
+</div>
+
+<div class="content">
+
+    <div class="title">
+        🎁 Combos Promocionales
+    </div>
+
+    <div class="form-box">
+        <h3>Crear nuevo combo</h3>
+
+        <form th:action="@{/admin/combos/guardar}" method="post">
+
+            <input
+                    type="text"
+                    name="nombre"
+                    placeholder="Nombre del combo. Ej: Combo Familiar"
+                    required>
+
+            <textarea
+                    name="descripcion"
+                    placeholder="Descripción del combo. Ej: Pizza + tacos para compartir"
+                    required></textarea>
+
+            <input
+                    type="number"
+                    step="0.01"
+                    name="precioCombo"
+                    placeholder="Precio del combo"
+                    required>
+
+            <div class="check-activo">
+                <input type="checkbox" name="activa" value="true" checked>
+                Combo activo
+            </div>
+
+            <h3>Selecciona productos del combo</h3>
+
+            <div class="productos-grid">
+
+                <label class="producto-check" th:each="producto : ${productos}">
+                    <input
+                            type="checkbox"
+                            name="productosIds"
+                            th:value="${producto.idProducto}">
+                    <span th:text="${producto.nombre}"></span>
+                    -
+                    $<span th:text="${#numbers.formatDecimal(producto.precio,1,2)}"></span>
+                </label>
+
+            </div>
+
+            <button type="submit" class="btn">
+                Guardar combo
+            </button>
+
+        </form>
+    </div>
+
+    <div class="table-box">
+        <h3>Combos registrados</h3>
+
+        <div th:if="${#lists.isEmpty(combos)}">
+            No hay combos registrados todavía.
+        </div>
+
+        <table th:if="${!#lists.isEmpty(combos)}">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Combo</th>
+                <th>Productos</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="combo : ${combos}">
+                <td th:text="${combo.idPromocion}"></td>
+
+                <td>
+                    <strong th:text="${combo.nombre}"></strong>
+                    <br>
+                    <span th:text="${combo.descripcion}"></span>
+                </td>
+
+                <td>
+                    <span th:each="p : ${combo.productos}">
+                        <span th:text="${p.nombre}"></span><br>
+                    </span>
+                </td>
+
+                <td>
+                    $<span th:text="${#numbers.formatDecimal(combo.precioCombo,1,2)}"></span>
+                </td>
+
+                <td>
+                    <span th:if="${combo.activa}" class="estado activo">
+                        ACTIVO
+                    </span>
+
+                    <span th:if="${!combo.activa}" class="estado inactivo">
+                        INACTIVO
+                    </span>
+                </td>
+
+                <td>
+                    <a th:if="${!combo.activa}"
+                       th:href="@{/admin/combos/activar/{id}(id=${combo.idPromocion})}"
+                       class="btn btn-success">
+                        Activar
+                    </a>
+
+                    <a th:if="${combo.activa}"
+                       th:href="@{/admin/combos/desactivar/{id}(id=${combo.idPromocion})}"
+                       class="btn btn-warning">
+                        Desactivar
+                    </a>
+
+                    <a th:href="@{/admin/combos/eliminar/{id}(id=${combo.idPromocion})}"
+                       class="btn btn-danger"
+                       onclick="return confirm('¿Seguro que deseas eliminar este combo?')">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

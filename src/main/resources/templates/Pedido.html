@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/CSSlogin.css">
+    <link rel="stylesheet" th:href="@{/CSS/cliente-mobile.css}">
+    <link rel="manifest" href="/manifest.json">
+    
+    <meta name="theme-color" content="#1f3d2b">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Realizar Pedido</title>
+
+    <style>
+        :root {
+            --verde-principal: #2F5D3A;
+            --verde-hover: #24482D;
+            --fondo: #D8D3CB;
+            --card: #E7E5E2;
+            --blanco: #FFFFFF;
+            --gris-borde: #CFCFCF;
+            --gris-texto: #6B6B6B;
+            --texto-principal: #1A1A1A;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI';
+            background: var(--fondo);
+            color: var(--texto-principal);
+        }
+
+        .navbar {
+            background: var(--verde-principal);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--blanco);
+        }
+
+        .navbar a {
+            color: var(--blanco);
+            margin-left: 15px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 40px;
+            gap: 30px;
+        }
+
+        .form, .resumen {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 12px;
+            width: 380px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+            text-align: center;
+            color: var(--verde-principal);
+        }
+
+        label {
+            font-size: 14px;
+            color: var(--gris-texto);
+            font-weight: bold;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 15px 0;
+            border-radius: 8px;
+            border: 1px solid var(--gris-borde);
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--verde-principal);
+        }
+
+        textarea {
+            resize: none;
+            height: 80px;
+        }
+
+        button {
+            background: var(--verde-principal);
+            color: var(--blanco);
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: var(--verde-hover);
+        }
+
+        .item {
+            border-bottom: 1px solid var(--gris-borde);
+            padding: 12px 0;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item-top {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            color: var(--verde-principal);
+        }
+
+        .item-detalle {
+            margin-top: 5px;
+            color: var(--gris-texto);
+            font-size: 14px;
+        }
+
+        .total {
+            margin-top: 18px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+            color: var(--verde-principal);
+        }
+
+        .empty {
+            text-align: center;
+            color: var(--gris-texto);
+            margin-top: 20px;
+        }
+
+        .nota {
+            font-size: 13px;
+            color: var(--gris-texto);
+            margin-top: -8px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Casa Mia</h2>
+    <div>
+        <a href="/home">Inicio</a>
+        <a href="/menu">Menú</a>
+        <a href="/carrito">Carrito</a>
+        <a href="/logout">Salir</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <form action="/confirmar-pedido" method="post" class="form">
+        <h2>Datos de entrega</h2>
+
+        <label>Dirección</label>
+        <input
+                type="text"
+                name="direccion"
+                placeholder="Ej: Colonia, calle, número de casa"
+                required>
+
+        <label>Teléfono</label>
+        <input
+                type="text"
+                name="telefono"
+                placeholder="Ej: 77778888"
+                pattern="[0-9]{8}"
+                maxlength="8"
+                minlength="8"
+                required>
+
+        <div class="nota">
+            El teléfono debe tener exactamente 8 números.
+        </div>
+
+        <label>Forma de pago</label>
+        <select name="pago" required>
+            <option value="">Seleccione una opción</option>
+            <option value="Efectivo">Efectivo</option>
+            <option value="Tarjeta">Tarjeta</option>
+        </select>
+        
+         <div id="datosTarjeta" style="display:none;">
+
+                <label>Nombre en la tarjeta</label>
+                <input
+                        type="text"
+                        name="nombreTarjeta"
+                        placeholder="Ej: Ricardo Pineda">
+
+                <label>Número de tarjeta</label>
+                <input
+                        type="text"
+                        name="numeroTarjeta"
+                        placeholder="0000 0000 0000 0000"
+                        maxlength="19"
+                        pattern="[0-9 ]{19}">
+
+                <label>Fecha de vencimiento</label>
+                <input
+                        type="text"
+                        name="vencimiento"
+                        placeholder="MM/AA"
+                        maxlength="5"
+                        pattern="[0-9]{2}/[0-9]{2}">
+
+                <label>CVV</label>
+                <input
+                        type="password"
+                        name="cvv"
+                        placeholder="123"
+                        maxlength="3"
+                        pattern="[0-9]{3}">
+
+            </div>
+
+        <label>Comentario de ubicación</label>
+        <textarea
+                name="comentario"
+                placeholder="Ej: casa azul, portón negro, frente a la tienda..."
+                required></textarea>
+
+        <button type="submit">
+            Confirmar Pedido
+        </button>
+    </form>
+
+    <div class="resumen">
+        <h2>Resumen del pedido</h2>
+
+        <div th:if="${#lists.isEmpty(carrito)}" class="empty">
+            No hay productos en el carrito.
+        </div>
+
+        <div th:each="item : ${carrito}" class="item">
+
+            <div class="item-top">
+                <span th:text="${item.nombre}">Producto</span>
+
+                <span>
+                    $<span th:text="${#numbers.formatDecimal(item.subtotal,1,2)}"></span>
+                </span>
+            </div>
+
+            <div class="item-detalle">
+                Cantidad:
+                <span th:text="${item.cantidad}"></span>
+                |
+                Precio unitario:
+                $<span th:text="${#numbers.formatDecimal(item.precio,1,2)}"></span>
+            </div>
+
+        </div>
+
+        <div class="total" th:if="${!#lists.isEmpty(carrito)}">
+            Total:
+            $<span th:text="${#numbers.formatDecimal(total,1,2)}"></span>
+        </div>
+    </div>
+
+</div>
+<script>
+
+    // MOSTRAR / OCULTAR TARJETA
+
+    const pagoSelect =
+            document.querySelector('select[name="pago"]');
+
+    const datosTarjeta =
+            document.getElementById('datosTarjeta');
+
+    const camposTarjeta =
+            datosTarjeta.querySelectorAll('input');
+
+    pagoSelect.addEventListener('change', function () {
+
+        if (this.value === 'Tarjeta') {
+
+            datosTarjeta.style.display = 'block';
+
+            camposTarjeta.forEach(input => {
+                input.required = true;
+            });
+
+        } else {
+
+            datosTarjeta.style.display = 'none';
+
+            camposTarjeta.forEach(input => {
+                input.required = false;
+                input.value = '';
+            });
+        }
+    });
+
+    // FORMATO AUTOMÁTICO TARJETA
+
+    const numeroTarjeta =
+            document.querySelector('input[name="numeroTarjeta"]');
+
+    numeroTarjeta.addEventListener('input', function (e) {
+
+        let valor = e.target.value
+                .replace(/\D/g, '')
+                .substring(0, 16);
+
+        valor = valor.replace(/(.{4})/g, '$1 ').trim();
+
+        e.target.value = valor;
+    });
+
+    // FORMATO AUTOMÁTICO FECHA
+
+    const vencimiento =
+            document.querySelector('input[name="vencimiento"]');
+
+    vencimiento.addEventListener('input', function (e) {
+
+        let valor = e.target.value
+                .replace(/\D/g, '')
+                .substring(0, 4);
+
+        if (valor.length >= 3) {
+            valor =
+                    valor.substring(0, 2)
+                    + '/'
+                    + valor.substring(2);
+        }
+
+        e.target.value = valor;
+    });
+
+    // SOLO 3 DIGITOS CVV
+
+    const cvv =
+            document.querySelector('input[name="cvv"]');
+
+    cvv.addEventListener('input', function (e) {
+
+        e.target.value =
+                e.target.value
+                .replace(/\D/g, '')
+                .substring(0, 3);
+    });
+
+</script>
+<script src="/pwa.js"></script>
+</body>
+</html>

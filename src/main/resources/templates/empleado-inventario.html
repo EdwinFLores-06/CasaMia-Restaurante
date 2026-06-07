@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventario - Empleado</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f5f1e8;
+        }
+
+        .navbar {
+            background: #1f3d2b;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            padding: 35px;
+        }
+
+        h1 {
+            color: #1f3d2b;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #1f3d2b;
+            color: white;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        input {
+            padding: 8px;
+            width: 90px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        button {
+            background: #1f3d2b;
+            color: white;
+            border: none;
+            padding: 9px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .bajo {
+            color: #c0392b;
+            font-weight: bold;
+        }
+
+        .medio {
+            color: #f39c12;
+            font-weight: bold;
+        }
+
+        .alto {
+            color: #27ae60;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <div>📦 Inventario - Casa Mia</div>
+    <a href="/empleado">⬅ Volver al panel</a>
+</div>
+
+<div class="container">
+
+    <h1>Control de Inventario</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Platillo</th>
+            <th>Stock actual</th>
+            <th>Estado</th>
+            <th>Actualizar stock</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="p : ${productos}">
+            <td th:text="${p.idProducto}"></td>
+
+            <td th:text="${p.nombre}"></td>
+
+            <td th:text="${p.cantidad}"></td>
+
+            <td>
+                <span th:if="${p.cantidad <= 5}" class="bajo">Stock bajo</span>
+                <span th:if="${p.cantidad > 5 and p.cantidad <= 15}" class="medio">Stock medio</span>
+                <span th:if="${p.cantidad > 15}" class="alto">Stock suficiente</span>
+            </td>
+
+            <td>
+                <form th:action="@{/empleado/inventario/actualizar/{id}(id=${p.idProducto})}" method="post">
+                    <input type="number" name="cantidad" th:value="${p.cantidad}" min="0">
+                    <button type="submit">Guardar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

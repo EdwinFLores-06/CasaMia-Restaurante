@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Promociones - Casa Mia</title>
+    
+    <link rel="stylesheet" th:href="@{/CSS/cliente-mobile.css}">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background: #f5f1e8;
+        }
+
+        .navbar {
+            background: #1f3d2b;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .container {
+            padding: 40px;
+        }
+
+        h1 {
+            color: #1f3d2b;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            color: #1f3d2b;
+            margin: 35px 0 20px;
+            border-bottom: 3px solid #c8a96a;
+            padding-bottom: 8px;
+        }
+
+        .promo-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 5px 14px rgba(0,0,0,0.10);
+            border-left: 7px solid #c8a96a;
+            display: flex;
+            margin-bottom: 25px;
+        }
+
+        .promo-card img.main-img {
+            width: 280px;
+            object-fit: cover;
+        }
+
+        .promo-content {
+            padding: 25px;
+            flex: 1;
+        }
+
+        .badge {
+            background: #c8a96a;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .precio-normal {
+            color: #777;
+            text-decoration: line-through;
+        }
+
+        .precio-promo {
+            color: #1f3d2b;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .btn-promo {
+            background: #1f3d2b;
+            color: white;
+            border: none;
+            padding: 11px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .combo-img-grid {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 12px 0;
+        }
+
+        .combo-img {
+            width: 85px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #c8a96a;
+        }
+
+        @media (max-width: 800px) {
+            .promo-card {
+                flex-direction: column;
+            }
+
+            .promo-card img.main-img {
+                width: 100%;
+                height: 180px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>🍽 Casa Mia</h2>
+    <div>
+        <a href="/home">Inicio</a>
+        <a href="/menu">Menú</a>
+        <a href="/carrito">Carrito</a>
+    </div>
+</div>
+
+<div class="container">
+
+    <h1>🔥 Promociones y Combos</h1>
+
+    <h2 class="section-title">Promociones individuales</h2>
+
+    <div th:if="${#lists.isEmpty(promociones)}">
+        <p>No hay promociones individuales disponibles.</p>
+    </div>
+
+    <div class="promo-card" th:each="promo : ${promociones}">
+
+        <img class="main-img" th:src="${promo.imagen}" alt="Promoción">
+
+        <div class="promo-content">
+            <span class="badge">PROMO</span>
+
+            <h2 th:text="${promo.nombre}"></h2>
+
+            <p th:text="${promo.textoPromocion}"></p>
+
+            <p class="precio-normal">
+                Antes: $<span th:text="${#numbers.formatDecimal(promo.precio,1,2)}"></span>
+            </p>
+
+            <p class="precio-promo">
+                Ahora: $<span th:text="${#numbers.formatDecimal(promo.precioPromocion,1,2)}"></span>
+            </p>
+
+            <form th:action="@{/carrito/agregar/{id}(id=${promo.idProducto})}" method="post">
+                <input type="hidden" name="cantidad" value="1">
+                <button type="submit" class="btn-promo">
+                    Seleccionar promoción
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <h2 class="section-title">Combos promocionales</h2>
+
+    <div th:if="${#lists.isEmpty(combos)}">
+        <p>No hay combos disponibles por el momento.</p>
+    </div>
+
+    <div class="promo-card" th:each="combo : ${combos}">
+
+        <div class="promo-content">
+            <span class="badge">COMBO</span>
+
+            <h2 th:text="${combo.nombre}"></h2>
+
+            <p th:text="${combo.descripcion}"></p>
+
+            <p><strong>Incluye:</strong></p>
+
+            <div class="combo-img-grid">
+                <div th:each="p : ${combo.productos}">
+                    <img class="combo-img" th:src="${p.imagen}" th:alt="${p.nombre}">
+                </div>
+            </div>
+
+            <ul>
+                <li th:each="p : ${combo.productos}" th:text="${p.nombre}"></li>
+            </ul>
+
+            <p class="precio-promo">
+                Precio combo:
+                $<span th:text="${#numbers.formatDecimal(combo.precioCombo,1,2)}"></span>
+            </p>
+
+            <form th:action="@{/carrito/agregar-combo/{id}(id=${combo.idPromocion})}" method="post">
+                <input type="hidden" name="cantidad" value="1">
+                <button type="submit" class="btn-promo">
+                    Seleccionar combo
+                </button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Casa Mia - Panel Empleado</title>
+
+    <!-- GOOGLE FONTS -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- ICONOS -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- CSS -->
+
+
+     <link rel="stylesheet" href="/css/empleado.css">
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            <i class="fa-solid fa-utensils"></i>
+        </div>
+
+        <div>
+
+            <h2>Casa Mia</h2>
+
+            <span>Panel Empleado</span>
+
+        </div>
+
+    </div>
+
+    <!-- MENU -->
+
+    <nav class="menu">
+
+        <a href="#" class="active">
+
+            <i class="fa-solid fa-house"></i>
+
+            <span>Dashboard</span>
+
+        </a>
+
+        <a href="/empleado/menu">
+
+            <i class="fa-solid fa-book-open"></i>
+
+            <span>Gestión menú</span>
+
+        </a>
+
+        <a href="/empleado/ordenes">
+
+            <i class="fa-solid fa-receipt"></i>
+
+            <span>Órdenes</span>
+
+        </a>
+
+        <a href="/empleado/reservas">
+
+            <i class="fa-solid fa-calendar-days"></i>
+
+            <span>Reservaciones</span>
+
+        </a>
+
+        <a href="/empleado/pedidos">
+
+            <i class="fa-solid fa-box"></i>
+
+            <span>Pedidos</span>
+
+        </a>
+
+        <a href="/empleado/inventario">
+
+            <i class="fa-solid fa-warehouse"></i>
+
+            <span>Inventario</span>
+
+        </a>
+
+    </nav>
+
+    <!-- LOGOUT -->
+
+    <a href="/logout" class="logout">
+
+        <i class="fa-solid fa-right-from-bracket"></i>
+
+        <span>Cerrar sesión</span>
+
+    </a>
+
+</aside>
+
+<!-- MAIN -->
+
+<main class="main-content">
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+        <div>
+
+            <h1>Dashboard</h1>
+
+            <p>
+                Bienvenido nuevamente al sistema de Casa Mia
+            </p>
+
+        </div>
+
+        <div class="profile">
+
+            <div class="profile-text">
+
+                <strong>Empleado</strong>
+
+                <span>Administrador de operaciones</span>
+
+            </div>
+
+            <div class="profile-img">
+
+                <i class="fa-solid fa-user"></i>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- STATS -->
+
+  <section class="stats-grid">
+
+    <!-- TOTAL ÓRDENES -->
+
+    <div class="stat-card">
+
+        <div class="stat-info">
+
+            <span>Total órdenes</span>
+
+            <h2 th:text="${totalOrdenes}">
+                0
+            </h2>
+
+        </div>
+
+        <div class="stat-icon orange">
+
+            <i class="fa-solid fa-receipt"></i>
+
+        </div>
+
+    </div>
+
+    <!-- TOTAL RESERVACIONES -->
+
+    <div class="stat-card">
+
+        <div class="stat-info">
+
+            <span>Reservaciones</span>
+
+            <h2 th:text="${totalReservas}">
+                0
+            </h2>
+
+        </div>
+
+        <div class="stat-icon blue">
+
+            <i class="fa-solid fa-calendar-days"></i>
+
+        </div>
+
+    </div>
+
+    <!-- PEDIDOS ACTIVOS -->
+
+    <div class="stat-card">
+
+        <div class="stat-info">
+
+            <span>Pedidos activos</span>
+
+            <h2 th:text="${totalPedidos}">
+                0
+            </h2>
+
+        </div>
+
+        <div class="stat-icon purple">
+
+            <i class="fa-solid fa-box"></i>
+
+        </div>
+
+    </div>
+
+    <!-- PRODUCTOS STOCK -->
+
+    <div class="stat-card">
+
+        <div class="stat-info">
+
+            <span>Productos stock</span>
+
+            <h2 th:text="${totalProductos}">
+                0
+            </h2>
+
+        </div>
+
+        <div class="stat-icon green">
+
+            <i class="fa-solid fa-warehouse"></i>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <!-- ACCIONES -->
+
+    <section class="cards-grid">
+
+        <!-- CARD -->
+
+        <div class="action-card">
+
+            <div class="card-top">
+
+                <div class="card-icon green-bg">
+
+                    <i class="fa-solid fa-book-open"></i>
+
+                </div>
+
+                <span class="status online">
+                    Activo
+                </span>
+
+            </div>
+
+            <h2>Gestión de Menú</h2>
+
+            <p>
+                Administra platillos, categorías y precios del restaurante.
+            </p>
+
+            <a href="/empleado/menu" class="card-btn">
+                Gestionar menú
+            </a>
+
+        </div>
+
+        <!-- CARD -->
+
+        <div class="action-card">
+
+            <div class="card-top">
+
+                <div class="card-icon orange-bg">
+
+                    <i class="fa-solid fa-receipt"></i>
+
+                </div>
+
+                <span class="status pending">
+                    ordenes
+                </span>
+
+            </div>
+
+            <h2>Órdenes</h2>
+
+            <p>
+                Visualiza y procesa las órdenes realizadas por clientes.
+            </p>
+
+            <a href="/empleado/ordenes" class="card-btn">
+                Ver órdenes
+            </a>
+
+        </div>
+
+        <!-- CARD -->
+
+        <div class="action-card">
+
+            <div class="card-top">
+
+                <div class="card-icon blue-bg">
+
+                    <i class="fa-solid fa-calendar-days"></i>
+
+                </div>
+
+                <span class="status blue-status">
+                    Hoy
+                </span>
+
+            </div>
+
+            <h2>Reservaciones</h2>
+
+            <p>
+                Gestiona reservaciones y disponibilidad de mesas.
+            </p>
+
+            <a href="/empleado/reservas" class="card-btn">
+                Ver reservaciones
+            </a>
+
+        </div>
+
+        <!-- CARD -->
+
+        <div class="action-card">
+
+            <div class="card-top">
+
+                <div class="card-icon purple-bg">
+
+                    <i class="fa-solid fa-box"></i>
+
+                </div>
+
+                <span class="status purple-status">
+                     activos
+                </span>
+
+            </div>
+
+            <h2>Pedidos</h2>
+
+            <p>
+                Supervisa pedidos en proceso y entregas realizadas.
+            </p>
+
+            <a href="/empleado/pedidos" class="card-btn">
+                Ver pedidos
+            </a>
+
+        </div>
+
+        <!-- CARD -->
+
+        <div class="action-card">
+
+            <div class="card-top">
+
+                <div class="card-icon cyan-bg">
+
+                    <i class="fa-solid fa-warehouse"></i>
+
+                </div>
+
+                <span class="status cyan-status">
+                    Stock OK
+                </span>
+
+            </div>
+
+            <h2>Inventario</h2>
+
+            <p>
+                Controla productos disponibles y movimientos de inventario.
+            </p>
+
+            <a href="/empleado/inventario" class="card-btn">
+                Ver inventario
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Usuarios - Casa Mia</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f5f1e8;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #1f3d2b;
+            padding: 25px;
+            position: fixed;
+        }
+
+        .sidebar h2 {
+            color: white;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: #2e5d3b;
+        }
+
+        .content {
+            margin-left: 250px;
+            width: 100%;
+            padding: 30px;
+        }
+
+        .title {
+            font-size: 32px;
+            color: #1f3d2b;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .form-box {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .form-box h3 {
+            color: #1f3d2b;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        .btn {
+            background: #1f3d2b;
+            color: white;
+            border: none;
+            padding: 11px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #2e5d3b;
+        }
+
+        .btn-danger {
+            background: #b22222;
+        }
+
+        .btn-danger:hover {
+            background: #8b1a1a;
+        }
+
+        .btn-warning {
+            background: #c8a96a;
+        }
+
+        .btn-warning:hover {
+            background: #b89355;
+        }
+
+        .table-box {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #1f3d2b;
+            color: white;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .activo {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .inactivo {
+            color: #b22222;
+            font-weight: bold;
+        }
+
+        .mensaje {
+            padding: 14px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .exito {
+            background: #d8f3dc;
+            color: #1f7a3a;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #842029;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>🍽 Casa Mia</h2>
+
+    <a href="/admin">🏠 Dashboard</a>
+    <a href="/admin/ventas">💰 Ventas</a>
+    <a href="/admin/reporte-inventario">📊 Reporte inventario</a>
+    <a href="/admin/usuarios">👥 Empleados</a>
+    <a href="/logout">🚪 Cerrar sesión</a>
+</div>
+
+<div class="content">
+
+    <div class="title">
+        Gestión de Empleados
+    </div>
+
+    <div th:if="${param.creado}" class="mensaje exito">
+        ✅ Empleado creado correctamente.
+    </div>
+
+    <div th:if="${param.eliminado}" class="mensaje exito">
+        ✅ Usuario eliminado correctamente.
+    </div>
+
+    <div th:if="${param.existe}" class="mensaje error">
+        ⚠ Ese usuario ya existe.
+    </div>
+
+    <div class="form-box">
+        <h3>Crear nuevo empleado</h3>
+
+        <form th:action="@{/admin/usuarios/guardar}" method="post">
+
+            <input
+                    type="text"
+                    name="username"
+                    placeholder="Usuario o correo del empleado"
+                    required>
+
+            <input
+                    type="password"
+                    name="password"
+                    placeholder="Contraseña"
+                    required>
+
+            <button type="submit" class="btn">
+                ➕ Crear empleado
+            </button>
+
+        </form>
+    </div>
+
+    <div class="table-box">
+
+        <h3>Usuarios registrados</h3>
+
+        <br>
+
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuario</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr th:each="usuario : ${usuarios}">
+
+                <td th:text="${usuario.id}"></td>
+
+                <td th:text="${usuario.username}"></td>
+
+                <td>
+                    <span th:each="rol : ${usuario.roles}">
+                        <span th:text="${rol.nombre}"></span><br>
+                    </span>
+                </td>
+
+                <td>
+                    <span th:if="${usuario.enabled}" class="activo">
+                        Activo
+                    </span>
+
+                    <span th:if="${!usuario.enabled}" class="inactivo">
+                        Inactivo
+                    </span>
+                </td>
+
+                <td>
+                    <a th:if="${usuario.enabled}"
+                       th:href="@{/admin/usuarios/desactivar/{id}(id=${usuario.id})}"
+                       class="btn btn-warning">
+                        Desactivar
+                    </a>
+
+                    <a th:if="${!usuario.enabled}"
+                       th:href="@{/admin/usuarios/activar/{id}(id=${usuario.id})}"
+                       class="btn">
+                        Activar
+                    </a>
+
+                    <a th:href="@{/admin/usuarios/eliminar/{id}(id=${usuario.id})}"
+                       class="btn btn-danger"
+                       onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">
+                        Eliminar
+                    </a>
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

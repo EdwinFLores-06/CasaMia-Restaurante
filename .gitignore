@@ -1,0 +1,13 @@
+target/
+*.log
+
+nbproject/private/
+
+.idea/
+.vscode/
+
+*.class
+
+uploads/
+
+.DS_Store

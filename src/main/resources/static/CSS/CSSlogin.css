@@ -1,0 +1,250 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 2 may 2026, 5:32:15 p. m.
+    Author     : fabri
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background-image: url("/img/restaurante.png");
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CONTENEDOR */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    backdrop-filter: blur(6px);
+}
+
+/* LOGIN */
+.login-box {
+    width: 400px;
+    background: #f3ecde;
+    padding: 40px;
+    border-radius: 15px;
+    margin-right: 100px;
+    
+}
+
+.logo img {
+    width: 150px; /* ajusta el tamaño */
+    height: auto; /* mantiene proporción */
+    display: block;
+    margin: 0 auto; /* lo centra */
+}
+
+.login-box h2 {
+    text-align: center;
+    color: #1e3d2f;
+    font-weight: bolder;
+    font-size: 50px;
+}
+
+.subtitle {
+    margin-left: 60px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #777;
+    font-weight: bolder;
+    padding-bottom: 10px;
+    width: 200px;
+    
+    border-bottom: 2px solid black;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+input {
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #1e3d2f;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #2c5a45;
+}
+
+.divider {
+    text-align: center;
+    margin: 20px 0;
+    color: #aaa;
+}
+
+.register {
+    text-align: center;
+}
+
+.register a {
+    color: #1e3d2f;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* LADO DERECHO */
+.info {
+    margin-left: 100px;
+    border-left:4px solid #071710 ;
+    flex: 1;
+    color: white;
+    padding: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info h1 {
+    font-size: 60px;
+}
+
+.info h2 {
+    font-size: 32px;
+    color: #d4a762;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+.desc {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.small {
+    font-size: 14px;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+.btn-outline {
+    width: fit-content;
+    padding: 10px 20px;
+    border: 2px solid #d4a762;
+    background: transparent;
+    color: #d4a762;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.btn-outline:hover {
+    background: #d4a762;
+    color: black;
+}
+
+/* ========================= */
+/* LOGIN RESPONSIVE MOVIL */
+/* ========================= */
+
+@media screen and (max-width: 768px) {
+
+    body{
+        overflow-x:hidden;
+    }
+
+    .container{
+
+        flex-direction:column !important;
+
+        justify-content:center !important;
+        align-items:center !important;
+
+        padding:20px !important;
+
+        min-height:100vh !important;
+    }
+
+    .left,
+    .right,
+    .info,
+    .image-side{
+
+        width:100% !important;
+    }
+
+    .right,
+    .info,
+    .image-side{
+
+        display:none !important;
+    }
+
+    .login-box{
+
+        width:95% !important;
+
+        max-width:360px !important;
+
+        margin:auto !important;
+
+        padding:28px !important;
+
+        border-radius:20px !important;
+    }
+
+    .login-box h1,
+    .login-box h2{
+
+        font-size:30px !important;
+        text-align:center;
+    }
+
+    .login-box p{
+
+        text-align:center;
+        font-size:13px !important;
+    }
+
+    input{
+
+        padding:12px !important;
+        font-size:14px !important;
+    }
+
+    button{
+
+        width:100% !important;
+
+        padding:13px !important;
+
+        font-size:14px !important;
+    }
+
+    .logo img{
+
+        width:90px !important;
+        height:90px !important;
+    }
+}

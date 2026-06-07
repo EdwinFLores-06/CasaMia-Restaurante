@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservaciones - Empleado</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f5f1e8;
+        }
+
+        .navbar {
+            background: #1f3d2b;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            background: #c8a96a;
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .container {
+            padding: 35px;
+        }
+
+        h1 {
+            color: #1f3d2b;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #1f3d2b;
+            color: white;
+            padding: 15px;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .estado {
+            padding: 7px 14px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .pendiente {
+            background: #f39c12;
+        }
+
+        .cancelada {
+            background: #c0392b;
+        }
+
+        .btn-cancelar {
+            background: #b22222;
+            color: white;
+            padding: 9px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .mensaje {
+            background: #d8f3dc;
+            color: #1f7a3a;
+            padding: 13px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>📅 Reservaciones - Casa Mia</h2>
+    <a href="/empleado">⬅ Volver al panel</a>
+</div>
+
+<div class="container">
+
+    <h1>Reservaciones registradas</h1>
+
+    <div th:if="${param.cancelada}" class="mensaje">
+        ✅ Reservación cancelada correctamente.
+    </div>
+
+    <div th:if="${#lists.isEmpty(reservas)}">
+        <h3>No hay reservaciones registradas.</h3>
+    </div>
+
+    <table th:if="${!#lists.isEmpty(reservas)}">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Personas</th>
+            <th>Mesa</th>
+            <th>Estado</th>
+            <th>Acción</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="reserva : ${reservas}">
+            <td th:text="${reserva.idReserva}"></td>
+            <td th:text="${reserva.nombre}"></td>
+            <td th:text="${reserva.fecha}"></td>
+            <td th:text="${reserva.hora}"></td>
+            <td th:text="${reserva.personas}"></td>
+            <td>Mesa <span th:text="${reserva.mesa}"></span></td>
+
+            <td>
+                <span th:if="${reserva.estado == 'PENDIENTE'}"
+                      class="estado pendiente">
+                    PENDIENTE
+                </span>
+
+                <span th:if="${reserva.estado == 'CANCELADA'}"
+                      class="estado cancelada">
+                    CANCELADA
+                </span>
+            </td>
+
+            <td>
+                <a th:if="${reserva.estado != 'CANCELADA'}"
+                   th:href="@{/empleado/reservas/cancelar/{id}(id=${reserva.idReserva})}"
+                   class="btn-cancelar"
+                   onclick="return confirm('¿Seguro que deseas cancelar esta reservación?')">
+                    Cancelar
+                </a>
+
+                <span th:if="${reserva.estado == 'CANCELADA'}">
+                    Sin acción
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>

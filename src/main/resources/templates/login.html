@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login Restaurante Casa Mia</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/CSSlogin.css}">
+    <link rel="stylesheet" href="/static/cliente-mobile.css">
+    <link rel="manifest" href="/manifest.json">
+
+    <meta name="theme-color" content="#1f3d2b">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    </head>
+
+<body>
+
+<div class="container">
+
+    <!-- LOGIN -->
+    <div class="login-box">
+
+        <!-- LOGO -->
+        <div class="logo">
+            <img th:src="@{/img/image.png}" alt="Logo Restaurante">
+        </div>
+
+        <h2>LOGIN</h2>
+        <p class="subtitle">Bienvenido de vuelta</p>
+
+        <!-- FORM LOGIN -->
+        <form method="post" th:action="@{/login}">
+
+            <!-- USERNAME -->
+            <label>E-mail</label>
+
+            <input
+                    type="text"
+                    name="username"
+                    placeholder="Ingresa tu correo electrónico"
+                    required
+            >
+
+            <!-- PASSWORD -->
+            <label>Password</label>
+
+            <input
+                    type="password"
+                    name="password"
+                    placeholder="Ingresa tu contraseña"
+                    required
+            >
+
+            <!-- BOTON -->
+            <button type="submit">
+                Iniciar sesión
+            </button>
+
+        </form>
+
+        <!-- ERROR -->
+        <div th:if="${param.error}" class="error-message">
+            Usuario o contraseña incorrectos
+        </div>
+
+        <!-- LOGOUT -->
+        <div th:if="${param.logout}" class="success-message">
+            Sesión cerrada correctamente
+        </div>
+
+        <div class="divider">o</div>
+
+        <!-- REGISTRO -->
+        <p class="register">
+            ¿No tienes cuenta?
+            <a th:href="@{/registro}">
+                Regístrate
+            </a>
+        </p>
+
+    </div>
+
+    <!-- INFORMACION DERECHA -->
+    <div class="info">
+
+        <h1>CASA MIA</h1>
+        <h2>¡Somos el mejor restaurante de la ciudad!</h2>
+
+        <p class="desc">
+            Controla lo que deseas pedir desde un solo click, reservaciones
+            y todo la variedad desde nuestro menu.
+        </p>
+
+        <a th:href="@{/nosotros}" class="btn-outline">
+          ¡Conoce más de nosotros!
+        </a>
+
+    </div>
+
+</div>
+<script src="/pwa.js"></script>
+</body>
+</html>

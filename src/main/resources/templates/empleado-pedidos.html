@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pedidos - Empleado</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f5f1e8;
+        }
+
+        .navbar {
+            background: #1f3d2b;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            background: #c8a96a;
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .container {
+            padding: 35px;
+        }
+
+        h1 {
+            color: #1f3d2b;
+        }
+
+        .pedido {
+            background: white;
+            padding: 22px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border-left: 7px solid #1f3d2b;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .pedido-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .estado {
+            padding: 8px 14px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .pendiente {
+            background: #f39c12;
+        }
+
+        .entregado {
+            background: #27ae60;
+        }
+
+        .datos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .dato {
+            background: #f5f1e8;
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .dato strong {
+            color: #1f3d2b;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .total {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f3d2b;
+        }
+
+        .acciones {
+            margin-top: 18px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            color: white;
+            padding: 10px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-entregado {
+            background: #27ae60;
+        }
+
+        .btn-pendiente {
+            background: #f39c12;
+        }
+
+        .empty {
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>📦 Pedidos - Casa Mia</h2>
+    <a href="/empleado">⬅ Volver al panel</a>
+</div>
+
+<div class="container">
+
+    <h1>Pedidos realizados por clientes</h1>
+
+    <div th:if="${#lists.isEmpty(ordenes)}" class="empty">
+        <h3>No hay pedidos registrados todavía.</h3>
+    </div>
+
+    <div class="pedido" th:each="orden : ${ordenes}">
+
+        <div class="pedido-header">
+            <h2>Pedido #<span th:text="${orden.idOrden}"></span></h2>
+
+            <span th:class="${orden.estado == 'ENTREGADO'} ? 'estado entregado' : 'estado pendiente'"
+                  th:text="${orden.estado}">
+            </span>
+        </div>
+
+        <div class="datos">
+            <div class="dato">
+                <strong>Cliente:</strong>
+                <span th:text="${orden.clienteUsername}"></span>
+            </div>
+
+            <div class="dato">
+                <strong>Fecha:</strong>
+                <span th:text="${orden.fecha}"></span>
+            </div>
+
+            <div class="dato">
+                <strong>Dirección:</strong>
+                <span th:text="${orden.direccion}"></span>
+            </div>
+
+            <div class="dato">
+                <strong>Teléfono:</strong>
+                <span th:text="${orden.telefono}"></span>
+            </div>
+
+            <div class="dato">
+                <strong>Pago:</strong>
+                <span th:text="${orden.pago}"></span>
+            </div>
+
+            <div class="dato">
+                <strong>Comentario:</strong>
+                <span th:text="${orden.comentario}"></span>
+            </div>
+        </div>
+
+        <h3>Platillos</h3>
+
+        <ul>
+            <li th:each="d : ${orden.detalles}">
+                <span th:text="${d.nombreProducto}"></span>
+                -
+                $<span th:text="${#numbers.formatDecimal(d.precio,1,2)}"></span>
+            </li>
+        </ul>
+
+        <p class="total">
+            Total:
+            $<span th:text="${#numbers.formatDecimal(orden.total,1,2)}"></span>
+        </p>
+
+        <div class="acciones">
+            <a th:if="${orden.estado != 'ENTREGADO'}"
+               th:href="@{/empleado/pedidos/entregado/{id}(id=${orden.idOrden})}"
+               class="btn btn-entregado">
+                ✅ Marcar entregado
+            </a>
+
+            <a th:if="${orden.estado == 'ENTREGADO'}"
+               th:href="@{/empleado/pedidos/pendiente/{id}(id=${orden.idOrden})}"
+               class="btn btn-pendiente">
+                ↩ Volver a pendiente
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

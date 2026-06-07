@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/cliente-mobile.css}">
+    <link rel="manifest" href="/manifest.json">
+    
+    <meta name="theme-color" content="#1f3d2b">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>Sobre Nosotros - Casa Mia</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            font-family:'Segoe UI', Arial, sans-serif;
+
+            background:
+                url("/img/restaurante.png")
+                center center / cover
+                no-repeat fixed;
+
+            min-height:100vh;
+
+            color:white;
+        }
+
+        .overlay{
+
+            min-height:100vh;
+
+            background:
+                linear-gradient(
+                    rgba(17,32,24,0.82),
+                    rgba(17,32,24,0.88)
+                );
+
+            padding:50px 20px;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .card{
+
+            max-width:1000px;
+            width:100%;
+
+            background:rgba(255,255,255,0.12);
+
+            backdrop-filter:blur(14px);
+
+            border:1px solid rgba(255,255,255,0.18);
+
+            border-radius:30px;
+
+            padding:50px;
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,.35);
+        }
+
+        .logo{
+
+            text-align:center;
+            margin-bottom:25px;
+        }
+
+        .logo img{
+
+            width:140px;
+            height:140px;
+
+            object-fit:cover;
+
+            border-radius:50%;
+
+            border:4px solid rgba(255,255,255,0.4);
+
+            box-shadow:
+                0 8px 20px rgba(0,0,0,.35);
+        }
+
+        h1{
+
+            text-align:center;
+
+            font-size:52px;
+
+            margin-bottom:10px;
+
+            font-weight:700;
+        }
+
+        h2{
+
+            text-align:center;
+
+            color:#e4c38c;
+
+            margin-bottom:35px;
+
+            font-weight:400;
+
+            font-style:italic;
+        }
+
+        p{
+
+            line-height:1.9;
+
+            font-size:18px;
+
+            color:#f2f2f2;
+        }
+
+        .grid{
+
+            display:grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px,1fr));
+
+            gap:22px;
+
+            margin-top:40px;
+        }
+
+        .mini-card{
+
+            background:rgba(255,255,255,0.15);
+
+            border:1px solid rgba(255,255,255,0.15);
+
+            border-radius:20px;
+
+            padding:25px;
+
+            transition:0.3s;
+
+            backdrop-filter:blur(10px);
+        }
+
+        .mini-card:hover{
+
+            transform:translateY(-6px);
+
+            background:rgba(255,255,255,0.22);
+        }
+
+        .mini-card h3{
+
+            margin-bottom:12px;
+
+            color:#f5d39d;
+        }
+
+        .mini-card p{
+
+            font-size:15px;
+
+            color:#f0f0f0;
+        }
+
+        .btn-area{
+
+            text-align:center;
+        }
+
+        .btn{
+
+            display:inline-block;
+
+            margin-top:40px;
+
+            background:#c8a96a;
+
+            color:white;
+
+            padding:15px 28px;
+
+            border-radius:40px;
+
+            text-decoration:none;
+
+            font-weight:bold;
+
+            transition:0.3s;
+        }
+
+        .btn:hover{
+
+            background:#d8b97d;
+
+            transform:scale(1.05);
+        }
+
+        @media(max-width:768px){
+
+            .card{
+                padding:30px;
+            }
+
+            h1{
+                font-size:38px;
+            }
+
+            p{
+                font-size:16px;
+            }
+
+            .logo img{
+                width:110px;
+                height:110px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="overlay">
+
+    <div class="card">
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <img th:src="@{/img/image.png}"
+                 alt="Logo Restaurante">
+
+        </div>
+
+        <h1>Casa Mia</h1>
+
+        <h2>
+            Tradición, sabor y experiencias inolvidables
+        </h2>
+
+        <p>
+            En Casa Mia creemos que cada comida debe convertirse
+            en un momento especial. Nuestro restaurante combina
+            sabores auténticos, atención cercana y un ambiente
+            diseñado para compartir con quienes más quieres.
+        </p>
+
+        <br>
+
+        <p>
+            Además de disfrutar nuestros platillos, los clientes
+            pueden realizar pedidos en línea, reservar mesas,
+            consultar promociones y vivir una experiencia moderna,
+            rápida y elegante desde cualquier lugar.
+        </p>
+
+        <!-- CARDS -->
+
+        <div class="grid">
+
+            <div class="mini-card">
+
+                <h3>🍽 Menú Variado</h3>
+
+                <p>
+                    Platillos preparados con ingredientes frescos
+                    y recetas especiales.
+                </p>
+
+            </div>
+
+            <div class="mini-card">
+
+                <h3>📅 Reservaciones</h3>
+
+                <p>
+                    Reserva mesas fácilmente y elige tu lugar favorito.
+                </p>
+
+            </div>
+
+            <div class="mini-card">
+
+                <h3>🛒 Pedidos en Línea</h3>
+
+                <p>
+                    Ordena desde casa y recibe una experiencia rápida.
+                </p>
+
+            </div>
+
+            <div class="mini-card">
+
+                <h3>🔥 Promociones</h3>
+
+                <p>
+                    Descubre combos especiales y descuentos exclusivos.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="btn-area">
+
+            <a class="btn"
+               th:href="@{/login}">
+
+                Volver al Login
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="/pwa.js"></script>
+</body>
+</html>

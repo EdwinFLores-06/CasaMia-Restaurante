@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa Mia - Dashboard</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/CSS/cliente-mobile.css}">
+    <link rel="manifest" href="/manifest.json">
+    
+    <meta name="theme-color" content="#1f3d2b">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div>
+
+            <div class="logo">
+                <div class="logo-icon">🍽</div>
+
+                <div>
+                    <h2>Casa Mia</h2>
+                    <p>RESTAURANTE</p>
+                </div>
+            </div>
+
+            <div class="menu">
+
+                <a href="/" class="active">🏠 Inicio</a>
+                <a href="/menu">🍽 Ver Menú</a>
+                <a href="/pedido">📦 Realizar Pedido</a>
+                <a href="/reservas">📅 Reservaciones</a>
+                <a href="/carrito">🛒 Carrito</a>
+                <a href="/mis-pedidos">📜 Mis pedidos</a>
+                <a href="/promociones">🔥 Promociones</a>
+                <a href="/perfil">👤 Perfil</a>
+                <a href="/logout">🚪 Cerrar sesión</a>
+
+            </div>
+
+            <div class="mini-card">
+
+                <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000" alt="food">
+
+                <h4>¿Tienes antojo?</h4>
+
+                <p>Explora nuestro menú completo y pide ahora</p>
+
+                <button onclick="location.href='/menu'">
+                    Ver menú →
+                </button>
+
+            </div>
+
+        </div>
+
+       
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <div class="hero-top">
+
+                <div>
+                    <h1>¡Bienvenido de vuelta! </h1>
+                    <p>¿Qué vamos a disfrutar hoy?</p>
+                </div>
+
+                <div class="time-box">
+                    <div id="fecha"></div>
+                    <strong id="hora"></strong>
+                </div>
+
+            </div>
+
+            <!-- ACTION CARDS -->
+            <div class="cards">
+
+                <div class="card" onclick="location.href='/menu'">
+
+                    <div class="icon-circle green">📖</div>
+
+                    <h3>Ver Menú</h3>
+
+                    <p>Explora nuestros platos y especialidades</p>
+
+                </div>
+
+                <div class="card" onclick="location.href='/reservas'">
+
+                    <div class="icon-circle purple">📅</div>
+
+                    <h3>Reservar Mesa</h3>
+
+                    <p>Reserva tu mesa rápida y fácilmente</p>
+
+                </div>
+
+                <div class="card" onclick="location.href='/pedido'">
+
+                    <div class="icon-circle orange">🍔</div>
+
+                    <h3>Realizar Pedido</h3>
+
+                    <p>Pide lo que deseas y disfrútalo en casa</p>
+
+                </div>
+
+                <div class="card" onclick="location.href='/carrito'">
+
+                    <div class="icon-circle pink">🛒</div>
+
+                    <h3>Carrito</h3>
+
+                    <p>Revisa tus compras antes de pagar</p>
+
+                </div>
+
+                <div class="card" onclick="location.href='/mis-pedidos'">
+
+                    <div class="icon-circle blue">📋</div>
+
+                    <h3>Mis pedidos</h3>
+
+                    <p>Consulta el estado e historial</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- PROMOS -->
+       <section class="promo-grid">
+
+    <div class="promo-box promo-left"
+         th:each="promo : ${promociones}">
+
+        <span>🔥 Promoción destacada</span>
+
+        <h2 th:text="${promo.nombre}">
+            Nombre promoción
+        </h2>
+
+        <p th:text="${promo.descripcion}">
+            Descripción
+        </p>
+
+        <a href="/promociones"
+           class="promo-btn">
+
+            Ver promoción →
+
+        </a>
+
+        <div class="discount">
+
+            $<span th:text="${promo.precioCombo}"></span>
+
+        </div>
+
+       <img th:src="${promo.imagen}"
+        alt="promo">
+    </div>
+
+</section>
+        <!-- INFO -->
+        <section class="bottom-info">
+
+            <div class="info-card">
+
+                <div class="info-icon green2">
+                    ⏰
+                </div>
+
+                <div>
+                    <strong>Horario de atención</strong>
+                    <p>Lunes a Domingo</p>
+                    <p>8 AM - 11:00 PM</p>
+                </div>
+
+            </div>
+
+            <div class="info-card">
+
+                <div class="info-icon gold">
+                    ❓
+                </div>
+
+                <div>
+                    <strong>¿Necesitas ayuda?</strong>
+                    <p>Nuestro equipo está listo para asistirte</p>
+                </div>
+
+            </div>
+
+            <div class="info-card">
+
+                <div class="info-icon green2">
+                    🔒
+                </div>
+
+                <div>
+                    <strong>Pago seguro</strong>
+                    <p>Tus pagos están protegidos con SSL</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+<script>
+
+    function actualizarReloj() {
+
+        const ahora = new Date();
+
+        const opcionesFecha = {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long'
+        };
+
+        const fecha = ahora.toLocaleDateString('es-ES', opcionesFecha);
+
+        const hora = ahora.toLocaleTimeString('es-ES', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+        });
+
+        document.getElementById("fecha").innerHTML =
+            "🕒 " + fecha;
+
+        document.getElementById("hora").innerHTML =
+            hora;
+    }
+
+    actualizarReloj();
+
+    setInterval(actualizarReloj, 1000);
+
+</script>
+<script src="/pwa.js"></script>
+</body>
+</html>
