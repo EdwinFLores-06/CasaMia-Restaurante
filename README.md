@@ -176,5 +176,6 @@ Desarrollado como parte de la carrera de Ingeniería en Sistemas Informáticos, 
 ## 👨‍💻 Autor
 
 **Edwin Flores Trejo**
+** Fabricio Diaz*
 
 Proyecto académico desarrollado durante el año 2026.
